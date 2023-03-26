@@ -1,5 +1,6 @@
 package com.aptech.api.service;
 
+import com.aptech.api.dto.UserDto;
 import com.aptech.api.exception.UserAlreadyExistsException;
 import com.aptech.api.exception.UserNotFoundException;
 import com.aptech.api.entity.User;
@@ -63,5 +64,18 @@ public class UserService implements IUserService {
     public User update(User user) {
         user.setRoles(user.getRoles());
         return userRepository.save(user);
+    }
+
+    @Override
+    public User updateUser(UserDto userDto) {
+        User user = userRepository.findByEmail(userDto.getEmail()).get();
+        user.setImage(user.getImage());
+        user.setGender(user.getGender());
+        user.setEmail(user.getEmail());
+        user.setPhone(user.getPhone());
+        user.setLastName(user.getLastName());
+        user.setFirstName(user.getFirstName());
+        return userRepository.save(user);
+
     }
 }

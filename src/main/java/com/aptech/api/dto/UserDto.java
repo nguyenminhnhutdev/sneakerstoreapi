@@ -1,21 +1,14 @@
-package com.aptech.api.entity;
+package com.aptech.api.dto;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Builder;
+import com.aptech.api.entity.EGender;
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
-
 @Data
-@Entity
+@AllArgsConstructor
 @NoArgsConstructor
-public class User {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+public class UserDto {
     private String firstName;
     private String lastName;
     @NaturalId(mutable = true)
@@ -25,6 +18,4 @@ public class User {
     private String date_ofbirth;
     private EGender gender;
     private String image;
-    private Boolean status;
-    private String roles;
 }

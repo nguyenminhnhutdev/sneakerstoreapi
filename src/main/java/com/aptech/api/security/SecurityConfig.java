@@ -19,13 +19,16 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig {
-    private static final String[] SECURED_URLs = {"/books/**"};
+    private static final String[] SECURED_URLs = {"/api/v1/products/**", "/api/v1/admin/**"};
 
     private static final String[] UN_SECURED_URLs = {
-            "/api/v1/products/**",
+            "/api/v1/products",
+            "/api/v1/products/get**",
             "/api/v1/orders/**",
             "/books/book/{id}",
-            "/api/v1/users/**",
+            "/api/v1/users/add",
+            "/api/v1/users/update",
+            "/api/v1/users/{email}",
             "/api/v1/authenticate/**"
     };
 

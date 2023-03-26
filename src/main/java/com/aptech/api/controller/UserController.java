@@ -1,5 +1,6 @@
 package com.aptech.api.controller;
 
+import com.aptech.api.dto.UserDto;
 import com.aptech.api.entity.User;
 import com.aptech.api.service.UserRecord;
 import com.aptech.api.service.UserService;
@@ -11,16 +12,16 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/v1/users")
+@RequestMapping("api/v1/")
 @RequiredArgsConstructor
 public class UserController {
     private final UserService userService;
 
-    @GetMapping("/all")
+    @GetMapping("admin/all")
     public ResponseEntity<List<UserRecord>> getAllUsers(){
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.FOUND);
     }
-    @PostMapping("/add")
+    @PostMapping("user/add")
     public ResponseEntity<User> add(@RequestBody User user){
         return ResponseEntity.ok(userService.add(user));
     }
@@ -35,8 +36,18 @@ public class UserController {
         userService.delete(email);
     }
 
-    @PutMapping("/update")
+    @PutMapping("admin/update")
     public ResponseEntity<User> update(@RequestBody User user){
         return ResponseEntity.ok(userService.update(user));
     }
+
+    @PutMapping("user/update")
+    public ResponseEntity<User> update(@RequestBody UserDto userDto){
+        return ResponseEntity.ok(userService.updateUser(userDto));
+    }
+
+//    @PutMapping("/admin/update")
+//    public ResponseEntity<User> update(@RequestBody User user){
+//        return ResponseEntity.ok(userService.update(user));
+//    }
 }
