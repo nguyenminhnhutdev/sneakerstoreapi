@@ -1,6 +1,7 @@
 package com.aptech.api.service;
 
 import com.aptech.api.dto.UserDto;
+import com.aptech.api.entity.Login;
 import com.aptech.api.exception.UserAlreadyExistsException;
 import com.aptech.api.exception.UserNotFoundException;
 import com.aptech.api.entity.User;
@@ -19,14 +20,20 @@ import java.util.stream.Collectors;
 public class UserService implements IUserService {
     @Autowired
     private final UserRepository userRepository;
+
     @Autowired
     private final PasswordEncoder passwordEncoder;
 
-    /**
-     * Insert a user to data
-     * @param user
-     * @return
-     */
+    @Override
+    public User getLoginUser(Login login) {
+        User user =  userRepository.findByEmail(login.getEmail())
+                .orElseThrow(() -> new UserNotFoundException("User not found"));
+        String passEncoder = passwordEncoder.encode(login.getPassword());
+        if (passwordEncoder.matches(login.getPassword(), user.getPassword())) {
+            return user;
+        }
+        return new User();
+    }
     @Override
     public User add(User user) {
         Optional<User> theUser = userRepository.findByEmail(user.getEmail());
@@ -78,4 +85,6 @@ public class UserService implements IUserService {
         return userRepository.save(user);
 
     }
+
+
 }
